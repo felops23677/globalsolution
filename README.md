@@ -8,11 +8,11 @@
 
 | Nome completo | RM |
 |---|---|
-| _Nome do integrante 1_ | _RM00000_ |
-| _Nome do integrante 2_ | _RM00000_ |
-| _Nome do integrante 3_ | _RM00000_ |
+| Felipe Oliveira Barcelos | RM576561 |
+| Felipe Arruda Calixto | 574454 |
 
-🎥 **Vídeo técnico (YouTube, não listado):** _cole o link aqui_
+
+🎥 **Vídeo técnico (YouTube, não listado):https://youtu.be/Ih_GNpkuR6M
 📊 **Dashboard:** abra `dashboard/index.html` no navegador (ou publique a pasta no GitHub Pages)
 
 ---
