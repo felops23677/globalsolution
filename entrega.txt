@@ -3,12 +3,12 @@ Desafio: Neighborhood Action Dashboard - CitizenTech
 Projeto: Praça comunitária com iluminação eficiente e solar
 
 INTEGRANTES
-Nome completo: ______________________________  RM: ________
-Nome completo: ______________________________  RM: ________
-Nome completo: ______________________________  RM: ________
+Nome completo: Felipe Oliveira Barcelos  RM:576561
+Nome completo: Felipe Arruda Calixto  RM: 574454
+
 
 REPOSITÓRIO GITHUB
-https://github.com/________/________
+https://github.com/felops23677/globalsolution
 
 VÍDEO NO YOUTUBE (não listado)
-https://youtu.be/________
+https://youtu.be/Ih_GNpkuR6M
