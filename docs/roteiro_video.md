@@ -1,0 +1,13 @@
+# Roteiro do vídeo técnico (máx. 3 min)
+
+Gravar a tela com o dashboard aberto (`dashboard/index.html`), com narração. Subir no YouTube como **não listado**.
+
+| Tempo | O que mostrar na tela | Fala (sugestão) |
+|---|---|---|
+| 0:00–0:20 | Topo do dashboard | "Somos o grupo ___. Na Global Solution de SERS, escolhemos uma praça comunitária da Grande São Paulo, com 20 postes de vapor de sódio de 150 W que ficam 100% acesos das 18h às 6h, inclusive de madrugada sem ninguém." |
+| 0:20–0:45 | README, seção 2 (tabela de consumo) | "Pela fórmula E igual a P vezes t sobre mil, cada poste gasta 170 W por 12 horas, 2,04 kWh por dia. A praça toda consome 1.224 kWh por mês. Com LED de 60 W, dimerização às 23h e sensor de presença, cada ponto cai para 0,54 kWh por dia, 73% a menos." |
+| 0:45–1:25 | Gráficos de comparação e a tabela comparativa | "Comparamos três alternativas com o mesmo serviço de iluminação. A1 é LED com sensor na rede. A2 é 100% solar, com módulo de 250 Wp e bateria de lítio de 1,5 kWh em cada poste. A3 é a híbrida. O 100% solar zera a conta, mas custa 112 mil reais e não se paga em 15 anos, porque a tarifa de iluminação pública é baixa e a nossa rede já é quase toda renovável. Recomendamos a A3: LED em todos os pontos e postes solares só nos 4 pontos críticos, que ficam acesos em apagão. Ela economiza 79% da energia, reduz 532 reais por mês e se paga em cerca de 7 anos." |
+| 1:25–1:50 | Diagrama de blocos (clicar para ampliar) | "No diagrama: as fontes, as luminárias, os sensores de presença, a medição de energia e a bateria vão para o controlador do poste. Ele aplica as regras de dimerização, o modo econômico quando a bateria está baixa e o alerta de falha. Os dados seguem por LoRaWAN até o servidor, que calcula os indicadores do dashboard." |
+| 1:50–2:30 | Seletor A0–A3 nos KPIs, depois a seção de monitoramento (mapa, perfil, SOC, alertas) | "Os indicadores são consumo da rede, economia, redução de custo, participação renovável, emissões evitadas e horas de funcionamento eficiente. No monitoramento simulado de junho, o mês com menos sol, dá para ver a dimerização no perfil da noite e as baterias aguentando dois dias nublados. O sistema também detectou a falha do poste P11 no dia 21 e gerou o alerta para a manutenção." |
+| 2:30–2:50 | Simulador de premissas: mexer na tarifa e no preço da bateria | "No simulador dá para testar outras premissas. Por exemplo, o solar só empata com o LED na rede se a tarifa passar de 2,35 reais por kWh." |
+| 2:50–3:00 | Seção de limitações | "Esses números são projeções baseadas em premissas, não resultados garantidos: tarifa estimada, custos aproximados e dados de monitoramento simulados. Obrigado!" |

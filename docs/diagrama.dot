@@ -1,0 +1,70 @@
+// Diagrama de blocos conceitual - Praça comunitária (alternativa A3 híbrida)
+// Renderizar:  dot -Tsvg docs/diagrama.dot -o docs/diagrama.svg
+digraph SERS {
+  graph [rankdir=LR, fontname="Helvetica,Arial,sans-serif", fontsize=13, nodesep=0.28, ranksep=0.55,
+         bgcolor="white", pad=0.3, newrank=true, splines=spline];
+  node  [shape=box, style="rounded,filled", fontname="Helvetica,Arial,sans-serif", fontsize=11,
+         color="#c9c8c2", fillcolor="#ffffff", fontcolor="#0b0b0b", penwidth=1.2, margin="0.14,0.07"];
+  edge  [color="#8a8984", arrowsize=0.7, fontname="Helvetica,Arial,sans-serif", fontsize=9, fontcolor="#52514e"];
+
+  subgraph cluster_fonte {
+    label="1. Fontes de energia"; style="rounded,filled"; fillcolor="#f4f3ef"; color="#f4f3ef"; fontcolor="#52514e";
+    rede  [label="Rede Enel SP\n(tarifa B4a)", fillcolor="#e6effa", color="#2a78d6"];
+    fv    [label="Módulo FV 250 Wp\n(4 postes solares)", fillcolor="#fdeee7", color="#eb6834"];
+    mppt  [label="Controlador MPPT\n+ BMS", fillcolor="#fdeee7", color="#eb6834"];
+    bat   [label="Bateria LiFePO4\n12,8 V · 120 Ah\nautonomia ≈ 2 noites", fillcolor="#fdeee7", color="#eb6834"];
+    fv -> mppt [label="CC"]; mppt -> bat [dir=both];
+    {rank=same; rede; fv; mppt; bat;}
+  }
+
+  subgraph cluster_carga {
+    label="2. Equipamentos consumidores"; style="rounded,filled"; fillcolor="#f4f3ef"; color="#f4f3ef"; fontcolor="#52514e";
+    led_rede  [label="16 luminárias LED 60 W\n(pontos na rede)"];
+    led_solar [label="4 luminárias LED 60 W\n(pontos críticos solares)"];
+    {rank=same; led_rede; led_solar;}
+  }
+
+  subgraph cluster_sensor {
+    label="3. Sensores e dados"; style="rounded,filled"; fillcolor="#f4f3ef"; color="#f4f3ef"; fontcolor="#52514e";
+    pir   [label="Sensor de presença\n(PIR / micro-ondas)"];
+    foto  [label="Fotocélula /\nrelógio astronômico"];
+    med   [label="Medição de potência\ne energia (Wh)"];
+    soc   [label="Tensão e SOC da bateria\n+ geração FV"];
+    {rank=same; pir; foto; med; soc;}
+  }
+
+  subgraph cluster_logica {
+    label="4. Lógica local (controlador do poste)"; style="rounded,filled"; fillcolor="#f4f3ef"; color="#f4f3ef"; fontcolor="#52514e";
+    ctrl [label="Regras de automação\n• 18h liga · 6h desliga\n• 18–23h e 5–6h: 100%\n• 23–5h: 30%, presença → 100%\n• SOC < 70% ao anoitecer → modo econômico\n• consumo < 50% do esperado → alerta de falha", shape=box, fillcolor="#ffffff", color="#0b0b0b", penwidth=1.4];
+  }
+
+  subgraph cluster_proc {
+    label="5. Comunicação e processamento"; style="rounded,filled"; fillcolor="#f4f3ef"; color="#f4f3ef"; fontcolor="#52514e";
+    lora [label="Rádio LoRaWAN\n→ gateway"];
+    api  [label="Servidor / API\n(ingestão MQTT/HTTP)"];
+    db   [label="Banco de séries\ntemporais"];
+    calc [label="Cálculo dos indicadores\n(premissas: tarifa,\nfator de emissão)"];
+    lora -> api -> db -> calc;
+    {rank=same; lora; api; db; calc;}
+  }
+
+  subgraph cluster_dash {
+    label="6. Neighborhood Action Dashboard"; style="rounded,filled"; fillcolor="#f4f3ef"; color="#f4f3ef"; fontcolor="#52514e";
+    kpi  [label="Indicadores\nkWh/mês · % economia · R$/mês\n% renovável · kg CO₂e/ano\nh/dia eficiente · SOC", fillcolor="#e8f6ef", color="#1baf7a"];
+    alert[label="Alertas\n(falha, bateria, modo econômico)", fillcolor="#e8f6ef", color="#1baf7a"];
+    users[label="Comunidade · associação\nde moradores · prefeitura\n(manutenção)", shape=box, style="rounded", color="#8a8984"];
+    kpi -> users; alert -> users;
+    {rank=same; kpi; alert;}
+  }
+
+  rede -> led_rede [label="CA 220 V", color="#2a78d6"];
+  bat  -> led_solar [label="CC 12,8 V", color="#eb6834"];
+
+  pir -> ctrl; foto -> ctrl; med -> ctrl; soc -> ctrl;
+  led_rede -> pir [style=invis]; led_solar -> soc [style=invis];
+  ctrl -> led_rede  [label="comando de\ndimerização", style=dashed, constraint=false];
+  ctrl -> led_solar [style=dashed, constraint=false];
+
+  ctrl -> lora [label="leituras a cada 15 min"];
+  calc -> kpi; calc -> alert;
+}

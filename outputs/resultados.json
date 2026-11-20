@@ -1,0 +1,384 @@
+{
+  "alternativas": [
+    {
+      "id": "A0",
+      "nome": "Atual: vapor de sódio",
+      "descricao": "Situação existente: 20 luminárias VSAP 150 W ligadas a 100% a noite toda, sem monitoramento.",
+      "pontos": {
+        "vsap": 20
+      },
+      "n_pontos": 20,
+      "carga_total_kwh_mes": 1224.0,
+      "consumo_rede_kwh_mes": 1224.0,
+      "consumo_rede_kwh_ano": 14891.999999999998,
+      "geracao_renovavel_kwh_mes": 0.0,
+      "participacao_renovavel": 0.0,
+      "custo_energia_rs_mes": 620.4999999999999,
+      "custo_om_rs_ano": 1600.0,
+      "custo_operacional_rs_mes": 753.8333333333334,
+      "capex_rs": 0.0,
+      "substituicoes_rs": {},
+      "fluxo_custos_rs": [
+        0.0,
+        9046.0,
+        9046.0,
+        9046.0,
+        9046.0,
+        9046.0,
+        9046.0,
+        9046.0,
+        9046.0,
+        9046.0,
+        9046.0,
+        9046.0,
+        9046.0,
+        9046.0,
+        9046.0,
+        9046.0
+      ],
+      "custo_acumulado_rs": [
+        0.0,
+        9046.0,
+        18092.0,
+        27138.0,
+        36184.0,
+        45230.0,
+        54276.0,
+        63322.0,
+        72368.0,
+        81414.0,
+        90460.0,
+        99506.0,
+        108552.0,
+        117598.0,
+        126644.0,
+        135690.0
+      ],
+      "tco_rs": 135690.0,
+      "vpl_custos_rs": 87857.00434310493,
+      "emissoes_kg_ano": 573.3419999999999,
+      "horas_eficientes_dia": 0,
+      "pontos_resilientes_apagao": 0,
+      "pontos_com_mercurio": 20,
+      "bateria_kwh_instalada": 0.0,
+      "economia_kwh_mes": 0.0,
+      "economia_pct": 0.0,
+      "reducao_custo_rs_mes": 0.0,
+      "emissoes_evitadas_kg_ano": 0.0,
+      "payback_simples_anos": null,
+      "payback_fluxo_anos": null,
+      "economia_tco_rs": 0.0
+    },
+    {
+      "id": "A1",
+      "nome": "LED + sensor (rede)",
+      "descricao": "Troca das 20 luminárias por LED 60 W com dimerização, sensor de presença e telegestão. Energia continua vindo da rede.",
+      "pontos": {
+        "led_rede": 20
+      },
+      "n_pontos": 20,
+      "carga_total_kwh_mes": 325.43999999999994,
+      "consumo_rede_kwh_mes": 325.43999999999994,
+      "consumo_rede_kwh_ano": 3959.5199999999995,
+      "geracao_renovavel_kwh_mes": 0.0,
+      "participacao_renovavel": 0.0,
+      "custo_energia_rs_mes": 164.98,
+      "custo_om_rs_ano": 960.0,
+      "custo_operacional_rs_mes": 244.98,
+      "capex_rs": 31000.0,
+      "substituicoes_rs": {},
+      "fluxo_custos_rs": [
+        31000.0,
+        2939.7599999999998,
+        2939.7599999999998,
+        2939.7599999999998,
+        2939.7599999999998,
+        2939.7599999999998,
+        2939.7599999999998,
+        2939.7599999999998,
+        2939.7599999999998,
+        2939.7599999999998,
+        2939.7599999999998,
+        2939.7599999999998,
+        2939.7599999999998,
+        2939.7599999999998,
+        2939.7599999999998,
+        2939.7599999999998
+      ],
+      "custo_acumulado_rs": [
+        31000.0,
+        33939.76,
+        36879.520000000004,
+        39819.280000000006,
+        42759.04000000001,
+        45698.80000000001,
+        48638.56000000001,
+        51578.320000000014,
+        54518.080000000016,
+        57457.84000000002,
+        60397.60000000002,
+        63337.36000000002,
+        66277.12000000002,
+        69216.88000000002,
+        72156.64000000001,
+        75096.40000000001
+      ],
+      "tco_rs": 75096.40000000001,
+      "vpl_custos_rs": 59551.68108420143,
+      "emissoes_kg_ano": 152.44151999999997,
+      "horas_eficientes_dia": 6,
+      "pontos_resilientes_apagao": 0,
+      "pontos_com_mercurio": 0,
+      "bateria_kwh_instalada": 0.0,
+      "economia_kwh_mes": 898.5600000000001,
+      "economia_pct": 0.7341176470588235,
+      "reducao_custo_rs_mes": 508.85333333333335,
+      "emissoes_evitadas_kg_ano": 420.9004799999999,
+      "payback_simples_anos": 5.076773923068861,
+      "payback_fluxo_anos": 5.076773923068862,
+      "economia_tco_rs": 60593.59999999999
+    },
+    {
+      "id": "A2",
+      "nome": "LED solar (100% renovável)",
+      "descricao": "20 postes solares isolados (off-grid): módulo FV + bateria LiFePO4 + LED 60 W com o mesmo perfil de dimerização.",
+      "pontos": {
+        "led_solar": 20
+      },
+      "n_pontos": 20,
+      "carga_total_kwh_mes": 325.43999999999994,
+      "consumo_rede_kwh_mes": 0.0,
+      "consumo_rede_kwh_ano": 0.0,
+      "geracao_renovavel_kwh_mes": 325.43999999999994,
+      "participacao_renovavel": 1.0,
+      "custo_energia_rs_mes": 0.0,
+      "custo_om_rs_ano": 1560.0,
+      "custo_operacional_rs_mes": 130.0,
+      "capex_rs": 112152.0,
+      "substituicoes_rs": {
+        "8": 49152.0
+      },
+      "fluxo_custos_rs": [
+        112152.0,
+        1560.0,
+        1560.0,
+        1560.0,
+        1560.0,
+        1560.0,
+        1560.0,
+        1560.0,
+        50712.0,
+        1560.0,
+        1560.0,
+        1560.0,
+        1560.0,
+        1560.0,
+        1560.0,
+        1560.0
+      ],
+      "custo_acumulado_rs": [
+        112152.0,
+        113712.0,
+        115272.0,
+        116832.0,
+        118392.0,
+        119952.0,
+        121512.0,
+        123072.0,
+        173784.0,
+        175344.0,
+        176904.0,
+        178464.0,
+        180024.0,
+        181584.0,
+        183144.0,
+        184704.0
+      ],
+      "tco_rs": 184704.0,
+      "vpl_custos_rs": 158141.6812970694,
+      "emissoes_kg_ano": 0.0,
+      "horas_eficientes_dia": 6,
+      "pontos_resilientes_apagao": 20,
+      "pontos_com_mercurio": 0,
+      "bateria_kwh_instalada": 30.72,
+      "economia_kwh_mes": 1224.0,
+      "economia_pct": 1.0,
+      "reducao_custo_rs_mes": 623.8333333333334,
+      "emissoes_evitadas_kg_ano": 573.3419999999999,
+      "payback_simples_anos": 14.981565589099652,
+      "payback_fluxo_anos": null,
+      "economia_tco_rs": -49014.0
+    },
+    {
+      "id": "A3",
+      "nome": "Híbrida (recomendada)",
+      "descricao": "16 pontos LED na rede + 4 postes solares nos pontos críticos (entrada, travessia para o ponto de ônibus, quadra e caminho interno), que continuam acesos durante apagões.",
+      "pontos": {
+        "led_rede": 16,
+        "led_solar": 4
+      },
+      "n_pontos": 20,
+      "carga_total_kwh_mes": 325.43999999999994,
+      "consumo_rede_kwh_mes": 260.352,
+      "consumo_rede_kwh_ano": 3167.616,
+      "geracao_renovavel_kwh_mes": 65.088,
+      "participacao_renovavel": 0.2,
+      "custo_energia_rs_mes": 131.984,
+      "custo_om_rs_ano": 1080.0,
+      "custo_operacional_rs_mes": 221.984,
+      "capex_rs": 47230.4,
+      "substituicoes_rs": {
+        "8": 9830.4
+      },
+      "fluxo_custos_rs": [
+        47230.4,
+        2663.808,
+        2663.808,
+        2663.808,
+        2663.808,
+        2663.808,
+        2663.808,
+        2663.808,
+        12494.207999999999,
+        2663.808,
+        2663.808,
+        2663.808,
+        2663.808,
+        2663.808,
+        2663.808,
+        2663.808
+      ],
+      "custo_acumulado_rs": [
+        47230.4,
+        49894.208,
+        52558.015999999996,
+        55221.82399999999,
+        57885.63199999999,
+        60549.43999999999,
+        63213.247999999985,
+        65877.05599999998,
+        78371.26399999998,
+        81035.07199999999,
+        83698.87999999999,
+        86362.688,
+        89026.496,
+        91690.304,
+        94354.11200000001,
+        97017.92000000001
+      ],
+      "tco_rs": 97017.92000000001,
+      "vpl_custos_rs": 79269.68112677503,
+      "emissoes_kg_ano": 121.953216,
+      "horas_eficientes_dia": 6,
+      "pontos_resilientes_apagao": 4,
+      "pontos_com_mercurio": 0,
+      "bateria_kwh_instalada": 6.144,
+      "economia_kwh_mes": 963.648,
+      "economia_pct": 0.7872941176470588,
+      "reducao_custo_rs_mes": 531.8493333333333,
+      "emissoes_evitadas_kg_ano": 451.3887839999999,
+      "payback_simples_anos": 7.400341450084861,
+      "payback_fluxo_anos": 8.940627295449586,
+      "economia_tco_rs": 38672.07999999999
+    }
+  ],
+  "solar": {
+    "demanda_wh_dia": 542.4,
+    "performance_ratio": 0.74003328,
+    "wp_minimo": 215.57059131814435,
+    "wp_adotado": 250,
+    "bateria_wh_minimo": 1427.3684210526314,
+    "bateria_ah_minimo": 111.51315789473682,
+    "bateria_ah_adotado": 120,
+    "bateria_wh_adotado": 1536.0,
+    "geracao_mes_critico_wh_dia": 629.028288,
+    "margem_mes_critico": 0.1597129203539822,
+    "geracao_media_anual_kwh": 276.18967051199996,
+    "demanda_anual_kwh": 197.976,
+    "aproveitamento_anual": 0.7168117461923627,
+    "autonomia_noites_real": 2.1522123893805314
+  },
+  "analises": {
+    "tarifa_equilibrio_A2_vs_A1_rs_kwh": 2.345469484516642,
+    "custo_extensao_rede_equilibrio_rs_ponto": 5480.379999999999,
+    "custo_marginal_co2_A2_vs_A1_rs_t": 47934.27232510759
+  },
+  "sensibilidade_tarifa": [
+    {
+      "tarifa_rs_kwh": 0.4,
+      "A0": {
+        "payback_simples_anos": null,
+        "tco_rs": 113352.00000000003
+      },
+      "A1": {
+        "payback_simples_anos": 6.183931671943624,
+        "tco_rs": 69157.11999999997
+      },
+      "A2": {
+        "payback_simples_anos": 18.701974386339383,
+        "tco_rs": 184704.0
+      },
+      "A3": {
+        "payback_simples_anos": 9.065764645759833,
+        "tco_rs": 92266.49600000004
+      }
+    },
+    {
+      "tarifa_rs_kwh": 0.5,
+      "A0": {
+        "payback_simples_anos": null,
+        "tco_rs": 135690.0
+      },
+      "A1": {
+        "payback_simples_anos": 5.076773923068861,
+        "tco_rs": 75096.40000000001
+      },
+      "A2": {
+        "payback_simples_anos": 14.981565589099652,
+        "tco_rs": 184704.0
+      },
+      "A3": {
+        "payback_simples_anos": 7.400341450084861,
+        "tco_rs": 97017.92000000001
+      }
+    },
+    {
+      "tarifa_rs_kwh": 0.7,
+      "A0": {
+        "payback_simples_anos": null,
+        "tco_rs": 180365.99999999994
+      },
+      "A1": {
+        "payback_simples_anos": 3.7382113695648815,
+        "tco_rs": 86974.95999999999
+      },
+      "A2": {
+        "payback_simples_anos": 10.71748021864608,
+        "tco_rs": 184704.0
+      },
+      "A3": {
+        "payback_simples_anos": 5.411943125737706,
+        "tco_rs": 106520.768
+      }
+    },
+    {
+      "tarifa_rs_kwh": 0.9,
+      "A0": {
+        "payback_simples_anos": null,
+        "tco_rs": 225041.99999999994
+      },
+      "A1": {
+        "payback_simples_anos": 2.9582320536466793,
+        "tco_rs": 98853.51999999999
+      },
+      "A2": {
+        "payback_simples_anos": 8.342904751986193,
+        "tco_rs": 184704.0
+      },
+      "A3": {
+        "payback_simples_anos": 4.265772404084067,
+        "tco_rs": 116023.61599999997
+      }
+    }
+  ]
+}

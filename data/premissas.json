@@ -1,0 +1,109 @@
+{
+  "_descricao": "Premissas do estudo SERS - Praça comunitária. Todos os valores são estimativas fundamentadas; a coluna 'fonte' remete à lista de referências do README (R1, R2...). Alterar aqui e rodar src/calculos.py regenera todos os resultados e o dashboard.",
+
+  "local": {
+    "nome": "Praça comunitária de referência (bairro residencial, Região Metropolitana de São Paulo)",
+    "area_m2": 4000,
+    "concessionaria": "Enel Distribuição São Paulo",
+    "publico_estimado_pessoas": 3000,
+    "_publico_fonte": "Premissa: moradores num raio de ~400 m (caminhada de 5 min) em bairro de densidade média"
+  },
+
+  "operacao": {
+    "n_pontos": 20,
+    "horas_noite": 12,
+    "_horas_noite_fonte": "Premissa: acendimento por fotocélula ~18h e desligamento ~6h (média anual ~12 h/noite na latitude de SP)",
+    "dias_mes": 30,
+    "dias_ano": 365
+  },
+
+  "economia": {
+    "tarifa_rs_kwh": 0.50,
+    "_tarifa_fonte": "R1, R2 + premissa: tarifa B4a (iluminação pública) estimada em ~55% da B1 residencial (R$ 725,18/MWh em 2025), reajuste de 10,18% em 2026, mais tributos. Validar com a Resolução Homologatória vigente.",
+    "horizonte_anos": 15,
+    "taxa_desconto_real": 0.06,
+    "_horizonte_fonte": "Premissa: vida útil de luminárias LED de 50.000+ h (~11-15 anos a 12 h/noite com dimerização)"
+  },
+
+  "ambiental": {
+    "fator_emissao_kg_kwh": 0.0385,
+    "_fator_fonte": "R3: fator médio anual do SIN em 2023 = 38,5 kg CO2/MWh (MCTI). Em 2025 os fatores mensais ficaram entre 21,5 e 28,9 kg/MWh (R4); 2023 é usado como valor conservador."
+  },
+
+  "tecnologias": {
+    "vsap": {
+      "nome": "Vapor de sódio alta pressão 150 W (atual)",
+      "potencia_lampada_w": 150,
+      "perdas_reator_w": 20,
+      "_fonte": "R11, R12 + premissa: reator eletromagnético com perdas típicas de 10-15% da potência da lâmpada",
+      "om_rs_ponto_ano": 80,
+      "_om_fonte": "Premissa: troca de lâmpada/relé a cada ~4-5 anos + reator, com caminhão cesto"
+    },
+    "led": {
+      "nome": "Luminária LED 60 W com dimerização e sensor de presença",
+      "potencia_w": 60,
+      "_potencia_fonte": "R12 + premissa: LED 60 W (~150 lm/W, ~9.000 lm) substitui VSAP 150 W em praças; confirmar com projeto luminotécnico (NBR 5101, R13)",
+      "horas_plena": 6,
+      "_horas_plena_fonte": "Premissa: 100% das 18h às 23h e das 5h às 6h (horários de maior circulação)",
+      "horas_dimerizadas": 6,
+      "nivel_dimerizado": 0.30,
+      "fracao_presenca": 0.20,
+      "_dimerizacao_fonte": "Premissa: das 23h às 5h a luminária fica em 30%; o sensor de presença eleva a 100% quando detecta pedestre (estimado 20% do tempo). R9 mostra produtos comerciais com essa lógica.",
+      "no_iot_w": 1.0,
+      "_no_iot_fonte": "Premissa: controlador com sensor + rádio LoRaWAN, consumo contínuo de ~1 W (24 h/dia)"
+    },
+    "solar": {
+      "hsp_projeto": 3.4,
+      "_hsp_projeto_fonte": "R6, R7, R8: mês crítico (junho) no Vale do Paraíba/SP = 3,2 kWh/m².dia no plano horizontal e 4,2 a 23°; usamos 3,4 (inclinação ~15° do poste, conservador)",
+      "hsp_media_anual": 4.09,
+      "_hsp_media_fonte": "R7: média anual em superfície ótima para São Paulo = 4,09 kWh/m².dia",
+      "eficiencias": {
+        "controlador_mppt": 0.96,
+        "bateria_ida_volta": 0.92,
+        "temperatura": 0.90,
+        "sujeira": 0.95,
+        "cabos": 0.98
+      },
+      "_eficiencias_fonte": "R5 + premissa: PR de sistemas FV fica tipicamente em ~0,75; sistema isolado com bateria resulta em ~0,74",
+      "autonomia_noites": 2,
+      "profundidade_descarga": 0.80,
+      "eficiencia_descarga": 0.95,
+      "tensao_bateria_v": 12.8,
+      "modulos_comerciais_wp": [100, 150, 200, 250, 300, 350, 400],
+      "baterias_comerciais_ah": [50, 60, 80, 100, 120, 150, 200],
+      "_bateria_fonte": "R9: postes solares comerciais usam baterias LiFePO4 12,8 V"
+    }
+  },
+
+  "custos": {
+    "_fonte": "Estimativas de ordem de grandeza (catálogos e varejo online, nov/2026, R15). Não é orçamento comercial: validar com cotação.",
+    "led_rede": {
+      "luminaria": 750,
+      "controlador_sensor_iot": 450,
+      "instalacao": 200,
+      "om_rs_ponto_ano": 30
+    },
+    "led_solar": {
+      "luminaria": 750,
+      "controlador_sensor_iot": 450,
+      "modulo_rs_wp": 1.8,
+      "bateria_rs_kwh": 1600,
+      "controlador_mppt": 350,
+      "estrutura_caixa_antifurto": 600,
+      "instalacao": 400,
+      "om_rs_ponto_ano": 60,
+      "_om_fonte": "Premissa: limpeza do módulo 2x/ano + inspeção da bateria",
+      "troca_bateria_ano": 8,
+      "_troca_fonte": "Premissa: vida útil de LiFePO4 em ciclagem diária rasa ~8-10 anos"
+    },
+    "gateway_lorawan": 3000,
+    "conectividade_rs_mes": 30
+  },
+
+  "alternativas": [
+    {"id": "A0", "nome": "Atual: vapor de sódio", "pontos": {"vsap": 20}, "descricao": "Situação existente: 20 luminárias VSAP 150 W ligadas a 100% a noite toda, sem monitoramento."},
+    {"id": "A1", "nome": "LED + sensor (rede)", "pontos": {"led_rede": 20}, "descricao": "Troca das 20 luminárias por LED 60 W com dimerização, sensor de presença e telegestão. Energia continua vindo da rede."},
+    {"id": "A2", "nome": "LED solar (100% renovável)", "pontos": {"led_solar": 20}, "descricao": "20 postes solares isolados (off-grid): módulo FV + bateria LiFePO4 + LED 60 W com o mesmo perfil de dimerização."},
+    {"id": "A3", "nome": "Híbrida (recomendada)", "pontos": {"led_rede": 16, "led_solar": 4}, "descricao": "16 pontos LED na rede + 4 postes solares nos pontos críticos (entrada, travessia para o ponto de ônibus, quadra e caminho interno), que continuam acesos durante apagões."}
+  ]
+}

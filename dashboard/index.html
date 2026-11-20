@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neighborhood Action Dashboard · Energia da Praça (SERS)</title>
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7; --surface-1: #fcfcfb; --surface-2: #f4f3ef;
+    --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #898781;
+    --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+    --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --ref: #898781;
+    --good: #0ca30c; --warning: #fab219; --serious: #ec835a; --critical: #d03b3b;
+    --good-text: #006300; --accent-wash: #e6effa;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --page: #0d0d0d; --surface-1: #1a1a19; --surface-2: #232321;
+      --text-primary: #f0efec; --text-secondary: #c3c2b7; --text-muted: #898781;
+      --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+      --s1: #3987e5; --s2: #d95926; --s3: #199e70; --ref: #898781;
+      --good-text: #0ca30c; --accent-wash: #1c2a3d;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--text-primary);
+         font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 20px 60px; }
+  header .eyebrow { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-secondary); }
+  h1 { font-size: 28px; line-height: 1.2; margin: 6px 0 8px; font-weight: 650; }
+  h2 { font-size: 19px; margin: 0 0 4px; font-weight: 620; }
+  h3 { font-size: 15px; margin: 0 0 2px; font-weight: 600; }
+  p.lead { color: var(--text-secondary); max-width: 860px; margin: 0; }
+  .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .tag { font-size: 12px; padding: 3px 10px; border-radius: 999px; background: var(--surface-2); color: var(--text-secondary); border: 1px solid var(--border); }
+  section { margin-top: 34px; }
+  .sub { color: var(--text-secondary); font-size: 13.5px; margin: 0 0 14px; }
+  .card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 900px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+
+  .seg { display: inline-flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 14px; }
+  .seg button { font: inherit; font-size: 13.5px; padding: 7px 14px; border-radius: 999px; cursor: pointer;
+                border: 1px solid var(--border); background: var(--surface-1); color: var(--text-primary); }
+  .seg button[aria-pressed="true"] { background: var(--text-primary); color: var(--surface-1); border-color: var(--text-primary); }
+  .seg button .key { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 7px; vertical-align: 0; }
+
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  @media (max-width: 900px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
+  .kpi { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+  .kpi .label { font-size: 13px; color: var(--text-secondary); }
+  .kpi .value { font-size: 26px; font-weight: 620; margin-top: 2px; line-height: 1.2; }
+  .kpi .value small { font-size: 13px; font-weight: 500; color: var(--text-secondary); margin-left: 4px; }
+  .kpi .delta { font-size: 12.5px; color: var(--text-secondary); margin-top: 4px; }
+  .kpi .delta.good { color: var(--good-text); }
+  .altdesc { margin-top: 12px; font-size: 13.5px; color: var(--text-secondary); }
+
+  .chart { position: relative; }
+  .chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .chart text { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12.5px; color: var(--text-secondary); margin: 6px 0 4px; }
+  .legend .k { display: inline-block; width: 14px; height: 2px; vertical-align: middle; margin-right: 6px; border-radius: 1px; }
+  .legend .k.dash { background: repeating-linear-gradient(90deg, var(--ref) 0 4px, transparent 4px 7px) !important; height: 2px; }
+  .legend .k.box { width: 10px; height: 10px; border-radius: 3px; }
+  .tip { position: absolute; pointer-events: none; background: var(--surface-1); border: 1px solid var(--border);
+         box-shadow: 0 4px 16px rgba(0,0,0,.12); border-radius: 8px; padding: 8px 10px; font-size: 12.5px; min-width: 140px;
+         opacity: 0; transition: opacity .08s; z-index: 5; white-space: nowrap; }
+  .tip .t { color: var(--text-secondary); margin-bottom: 4px; }
+  .tip .row { display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+  .tip .row b { font-weight: 650; color: var(--text-primary); }
+  .tip .row span.n { color: var(--text-secondary); }
+  .tip .lk { display: inline-block; width: 12px; height: 2px; margin-right: 6px; vertical-align: middle; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+  th { font-weight: 600; color: var(--text-secondary); font-size: 12.5px; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.rec td { background: var(--accent-wash); }
+  #tb-comp td:first-child, #tb-comp th:first-child { min-width: 150px; font-weight: 500; }
+  #tb-comp td:not(:first-child) { min-width: 170px; }
+  .scroll { overflow-x: auto; }
+  .tbl-key { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; }
+
+  .status { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; white-space: nowrap; }
+  .status i { display: inline-flex; width: 16px; height: 16px; border-radius: 50%; color: #fff; font-style: normal;
+              font-size: 11px; font-weight: 700; align-items: center; justify-content: center; }
+  .st-good i { background: var(--good); } .st-warning i { background: var(--warning); color: #0b0b0b; }
+  .st-critical i { background: var(--critical); } .st-info i { background: var(--s1); }
+
+  .controls { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px 20px; margin-bottom: 16px; }
+  @media (max-width: 900px) { .controls { grid-template-columns: 1fr 1fr; } }
+  .controls label { font-size: 12.5px; color: var(--text-secondary); display: block; }
+  .controls output { font-weight: 600; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+  .controls input[type=range] { width: 100%; accent-color: var(--s1); }
+  button.reset { font: inherit; font-size: 13px; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border);
+                 background: var(--surface-2); color: var(--text-primary); cursor: pointer; }
+  .diagram img { width: 100%; height: auto; background: #fff; border-radius: 8px; }
+  .note { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
+  ul.clean { margin: 0; padding-left: 18px; } ul.clean li { margin: 4px 0; }
+  a { color: var(--s1); }
+  footer { margin-top: 40px; font-size: 12.5px; color: var(--text-muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">CitizenTech · Neighborhood Action Dashboard · contribuição de SERS</div>
+    <h1>Praça comunitária: iluminação eficiente e solar</h1>
+    <p class="lead" id="lead"></p>
+    <div class="tags">
+      <span class="tag">Área Enel SP · 20 pontos de iluminação</span>
+      <span class="tag">Valores = projeções sobre premissas</span>
+      <span class="tag">Monitoramento com dados simulados</span>
+    </div>
+  </header>
+
+  <section aria-labelledby="h-ind">
+    <h2 id="h-ind">Indicadores de eficiência e sustentabilidade</h2>
+    <p class="sub">Escolha uma alternativa. Todos os indicadores são comparados à situação atual (A0), com o mesmo serviço de iluminação e o mesmo período de referência (mês de 30 dias, ano de 365 dias).</p>
+    <div class="seg" role="group" aria-label="Alternativa" id="seg"></div>
+    <div class="kpis" id="kpis"></div>
+    <div class="altdesc" id="altdesc"></div>
+  </section>
+
+  <section aria-labelledby="h-comp">
+    <h2 id="h-comp">Comparação das alternativas</h2>
+    <p class="sub">Mesma necessidade de iluminação nas alternativas LED (A1, A2 e A3); o que muda é a fonte de energia.</p>
+    <div class="grid2">
+      <div class="card"><h3>Energia comprada da rede</h3><p class="sub">kWh/mês</p><div class="chart" id="ch-consumo"></div></div>
+      <div class="card"><h3>Custo acumulado em 15 anos</h3><p class="sub">R$ (investimento + energia + manutenção + troca de baterias)</p>
+        <div class="legend" id="lg-tco"></div><div class="chart" id="ch-tco"></div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>Tabela comparativa</h3>
+      <div class="scroll"><table id="tb-comp"></table></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-diag">
+    <h2 id="h-diag">Como a solução funciona</h2>
+    <p class="sub">Diagrama de blocos: fonte → consumo → sensores → lógica local → processamento → indicadores deste painel.</p>
+    <div class="card diagram"><a href="diagrama.svg" target="_blank" title="Abrir em tamanho real"><img src="diagrama.svg" alt="Diagrama de blocos da solução: rede e postes solares alimentam luminárias LED; sensores de presença, fotocélula, medição de energia e estado da bateria alimentam o controlador; dados seguem por LoRaWAN ao servidor, que calcula os indicadores do dashboard."></a><p class="note">Clique no diagrama para abrir em tamanho real.</p></div>
+  </section>
+
+  <section aria-labelledby="h-mon">
+    <h2 id="h-mon">Monitoramento da alternativa recomendada (A3)</h2>
+    <p class="sub">30 dias de junho, o mês com menos sol. <strong>Dados simulados</strong> por <code>src/simulacao.py</code> para demonstrar as leituras e alertas que o sistema geraria.</p>
+    <div class="kpis" id="kpis-mon"></div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card"><h3>Mapa da praça — status na última noite</h3><p class="sub">Círculo = ponto na rede · losango = poste solar</p>
+        <div class="legend" id="lg-mapa"></div><div class="chart" id="ch-mapa"></div></div>
+      <div class="card"><h3>Perfil de potência de um ponto LED ao longo da noite</h3><p class="sub">W, média dos pontos na rede · dimerização às 23h e retorno às 5h</p>
+        <div class="chart" id="ch-perfil"></div></div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card"><h3>Energia diária da rede (16 pontos)</h3><p class="sub">kWh/dia medido (simulado) × estimativa</p>
+        <div class="legend" id="lg-rede"></div><div class="chart" id="ch-rede"></div></div>
+      <div class="card"><h3>Carga das baterias dos 4 postes solares</h3><p class="sub">% ao fim de cada noite</p>
+        <div class="legend" id="lg-soc"></div><div class="chart" id="ch-soc"></div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>Alertas gerados</h3>
+      <div class="scroll"><table id="tb-alertas"></table></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-sim">
+    <h2 id="h-sim">Simulador de premissas</h2>
+    <p class="sub">Mude as premissas e veja como os resultados reagem. Usa as mesmas fórmulas de <code>src/modelo.py</code> (portadas em <code>modelo.js</code>).</p>
+    <div class="card">
+      <div class="controls" id="controls"></div>
+      <button class="reset" id="reset">Voltar às premissas do estudo</button>
+      <div class="scroll" style="margin-top:14px"><table id="tb-sim"></table></div>
+      <p class="note" id="sim-note"></p>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-prem">
+    <h2 id="h-prem">Premissas, fontes e limitações</h2>
+    <div class="grid2">
+      <div class="card"><h3>Principais premissas</h3><ul class="clean" id="lst-prem"></ul></div>
+      <div class="card"><h3>Limitações</h3>
+        <ul class="clean">
+          <li>Valores são projeções condicionadas às premissas, não resultados garantidos.</li>
+          <li>Custos são ordens de grandeza (varejo e catálogos), não orçamento comercial.</li>
+          <li>A tarifa B4a foi estimada; confirmar na Resolução Homologatória vigente da Enel SP.</li>
+          <li>Equivalência LED 60 W × VSAP 150 W depende de projeto luminotécnico (ABNT NBR 5101).</li>
+          <li>Não inclui emissões de fabricação de módulos e baterias (análise de ciclo de vida).</li>
+          <li>Monitoramento usa dados simulados; em campo, calibrar a fração de presença por ponto.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>Global Solution 2026.2 · Soluções em Energias Renováveis e Sustentáveis · gerado a partir de <code>data/premissas.json</code> por <code>src/main.py</code>.</footer>
+</div>
+<div class="tip" id="tip" role="tooltip"></div>
+<script src="data.js"></script>
+<script src="modelo.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
